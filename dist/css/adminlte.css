@@ -1265,6 +1265,19 @@ pre code {
     margin-left: 91.666667%;
   }
 }
+@media (max-width: 768px) {
+  .layout-navbar-fixed .wrapper .main-header  {
+  left: -80px;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 1037;
+}
+
+
+
+}
+
 
 @media (min-width: 992px) {
   .col-lg {
@@ -4801,7 +4814,14 @@ input[type="button"].btn-block {
   -ms-flex: 1 1 auto;
   flex: 1 1 auto;
   min-height: 1px;
-  padding: 1.25rem;
+  padding: 5.25rem;
+}
+
+.card-body-login {
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  min-height: 1px;
+  padding: 0.5rem;
 }
 
 .card-title {
@@ -11054,7 +11074,7 @@ body:not(.layout-fixed).layout-navbar-fixed.text-sm .wrapper .main-sidebar .side
   .layout-lg-navbar-fixed .wrapper .main-header.text-sm ~ .content-wrapper {
     margin-top: calc(2.93725rem + 1px);
   }
-  .layout-lg-navbar-fixed .wrapper .main-header {
+ {
     left: 0;
     position: fixed;
     right: 0;
@@ -11421,7 +11441,7 @@ body.sidebar-collapse:not(.sidebar-mini-md):not(.sidebar-mini) .main-header::bef
   .sidebar-collapse .sidebar-mini-md .content-wrapper, .sidebar-collapse
   .sidebar-mini-md .main-footer, .sidebar-collapse
   .sidebar-mini-md .main-header {
-    margin-left: 4.6rem;
+    margin-left: 0rem;
   }
 }
 
@@ -11431,7 +11451,7 @@ body.sidebar-collapse:not(.sidebar-mini-md):not(.sidebar-mini) .main-header::bef
   .sidebar-mini-md .main-footer::before,
   .sidebar-mini-md .main-header,
   .sidebar-mini-md .main-header::before {
-    margin-left: 4.6rem;
+    margin-left: 0rem;
   }
 }
 

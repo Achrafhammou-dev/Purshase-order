@@ -137,17 +137,17 @@
 }
 
 </style>
+
 <div class="card card-outline card-primary">
 	<div class="card-header">
-		<h3 class="card-title">List of Purchase Orders</h3>
+		<h3 class="card-title">List of purshase Requisition</h3>
 		<div class="card-tools">
-			<a href="?page=purchase_orders/manage_po" class="btn btn-flat btn-primary"><span class="fas fa-plus"></span>  Create New</a>
+			<a href="?page=purshase_requisition/manage_pr" class="btn btn-flat btn-primary"><span class="fas fa-plus"></span>  Create New</a>
 		</div>
 	</div>
 	<div class="card-body">
 		<div class="container-fluid">
         <div class="container-fluid">
-			<div class="table-responsive">
 			<table class="table table-hover table-striped">
 				<colgroup>
 					<col width="5%">
@@ -163,8 +163,8 @@
 					<tr class="bg-navy disabled">
 						<th>#</th>
 						<th>Date Created</th>
-						<th>PO #</th>
-						<th>Supplier</th>
+						<th>PR #</th>
+						<th>requestor</th>
 						<th>Items</th>
 						<th>Total Amount</th>
 						<th>Status</th>
@@ -174,20 +174,20 @@
 				<tbody>
 					<?php 
 					$i = 1;
-						$qry = $conn->query("SELECT po.*, s.name as sname FROM `po_list` po inner join `supplier_list` s on po.supplier_id = s.id order by unix_timestamp(po.date_updated)");
+						$qry = $conn->query("SELECT pr.*, s.lastname as sname FROM `pr_list` pr inner join `users` s on pr.requestor_id = s.id order by unix_timestamp(pr.date_updated)");
 						while($row = $qry->fetch_assoc()):
-							$row['item_count'] = $conn->query("SELECT * FROM order_items where po_id = '{$row['id']}'")->num_rows;
-							$row['total_amount'] = $conn->query("SELECT sum(quantity * unit_price) as total FROM order_items where po_id = '{$row['id']}'")->fetch_array()['total'];
+							$row['item_count'] = $conn->query("SELECT * FROM req_items where pr_id = '{$row['id']}'")->num_rows;
+							$row['total_amount'] = $conn->query("SELECT sum(quantity * unit_price) as total FROM req_items where pr_id = '{$row['id']}'")->fetch_array()['total'];
 					?>
 						<tr>
 							<td class="text-center"><?php echo $i++; ?></td>
 							<td class=""><?php echo date("M d,Y H:i",strtotime($row['date_created'])) ; ?></td>
-							<td class=""><?php echo $row['po_no'] ?></td>
+							<td class=""><?php echo $row['pr_no'] ?></td>
 							<td class=""><?php echo $row['sname'] ?></td>
 							<td class="text-right"><?php echo number_format($row['item_count']) ?></td>
 							<td class="text-right"><?php echo number_format($row['total_amount']) ?></td>
 							<td>
-								<?php 
+								<!-- <?php 
 									switch ($row['status_sales']) {
 										case '1':
 											echo '<span class="badge badge-success">Approved</span>';
@@ -199,7 +199,7 @@
 											echo '<span class="badge badge-secondary">Pending</span>';
 											break;
 									}
-								?>
+								?> -->
 								<?php 
 									switch ($row['status_finance']) {
 										case '1':
@@ -233,22 +233,22 @@
 				                    <span class="sr-only">Toggle Dropdown</span>
 				                  </button>
 									<div class="dropdown-menu" role="menu">
-									<?php if (isset($_SESSION['userdata']['type']) && ($_SESSION['userdata']['type'] == 1 || $_SESSION['userdata']['type'] == 2)): ?>
+									<?php if (isset($_SESSION['userdata']['type']) && ($_SESSION['userdata']['type'] == 1)): ?>
 								<div class="dropdown-divider"></div>
-									<a class="dropdown-item" href="?page=purchase_orders/manage_po&id=<?php echo $row['id'] ?>">
+									<a class="dropdown-item" href="?page=purshase_requisition/manage_pr&id=<?php echo $row['id'] ?>">
 										<span class="fa fa-edit text-primary"></span> Edit
 									</a>
+									<?php endif; ?>
 									<div class="dropdown-divider"></div>
 									<a class="dropdown-item delete_data" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>">
 										<span class="fa fa-trash text-danger"></span> Delete
 									</a>
-								<?php endif; ?>
 								<div class="dropdown-divider"></div>
-									<a class="dropdown-item" href="?page=purchase_orders/edit_status&id=<?php echo $row['id'] ?>">
+									<a class="dropdown-item" href="?page=purshase_requisition/edit_status&id=<?php echo $row['id'] ?>">
 										<span class="fa fa-edit text-primary"></span> Edit Status
 									</a>
 									<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="?page=purchase_orders/view_po&id=<?php echo $row['id'] ?>">
+								<a class="dropdown-item" href="?page=purshase_requisition/view_pr&id=<?php echo $row['id'] ?>">
 									<span class="fa fa-eye text-primary"></span> View
 								</a>
 							</div>
@@ -260,7 +260,6 @@
 			</table>
 		</div>
 		</div>
-		</div>
 	</div>
 </div>
 <script>
@@ -269,7 +268,7 @@
 			_conf("Are you sure to delete this rent permanently?","delete_rent",[$(this).attr('data-id')])
 		})
 		$('.view_details').click(function(){
-			uni_modal("Reservaton Details","purchase_orders/view_details.php?id="+$(this).attr('data-id'),'mid-large')
+			uni_modal("Reservaton Details","purshase_requisition/view_details.php?id="+$(this).attr('data-id'),'mid-large')
 		})
 		$('.renew_data').click(function(){
 			_conf("Are you sure to renew this rent data?","renew_rent",[$(this).attr('data-id')]);
@@ -280,7 +279,7 @@
 	function delete_rent($id){
 		start_loader();
 		$.ajax({
-			url:_base_url_+"classes/Master.php?f=delete_po",
+			url:_base_url_+"classes/Master.php?f=delete_pr",
 			method:"POST",
 			data:{id: $id},
 			dataType:"json",

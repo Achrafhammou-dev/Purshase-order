@@ -13,7 +13,74 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
     }
 }
 ?>
+
+
 <style>
+    @media (max-width: 768px) {
+    /* General Adjustments */
+    .card-body {
+        padding: 0.5rem;
+    }
+
+    .table {
+        font-size: 12px;
+    }
+
+    /* Table Responsive */
+    #item-list {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    #item-list thead th,
+    #item-list tbody td {
+        text-align: center;
+        padding: 0.5rem;
+    }
+
+    /* Title and Vendor Details */
+    .text-centre {
+        font-size: 14px;
+    }
+
+    .col-6, .col-4, .col-3 {
+        flex: 0 0 100%;
+        max-width: 100%;
+        margin-bottom: 1rem;
+    }
+
+    /* Logo Alignment */
+    center img {
+        max-height: 80px;
+    }
+
+    /* Buttons */
+    .btn {
+        font-size: 12px;
+        padding: 0.25rem 0.5rem;
+    }
+
+    /* Status Buttons */
+    .btn-flat {
+        display: block;
+        width: 100%;
+        text-align: center;
+        margin-bottom: 0.5rem;
+    }
+
+    /* Table Cloning */
+    #item-clone input {
+        font-size: 12px;
+        padding: 0.25rem;
+    }
+
+    /* Footer Adjustments */
+    tfoot th, tfoot td {
+        font-size: 12px;
+    }
+}
+
     span.select2-selection.select2-selection--single {
         border-radius: 0;
         padding: 0.25rem 0.5rem;
@@ -40,7 +107,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 </style>
 <div class="card card-outline card-info">
 	<div class="card-header">
-		<h3 class="card-title"><?php echo isset($id) ? "Update Purchase Order Details": "New Purchase Order" ?> </h3>
+		<h3 class="card-title"><?php echo isset($id) ? "View Purchase Order Details": "New Purchase Order" ?> </h3>
         <div class="card-tools">
             <button class="btn btn-sm btn-flat btn-success" id="print" type="button"><i class="fa fa-print"></i> Print</button>
             <?php if (isset($_SESSION['userdata']['type']) && $_SESSION['userdata']['type'] == 1): ?>
@@ -63,8 +130,8 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
             
         </div>
         <div class="col-3">
-            <center><img src="<?php echo validate_image($_settings->info('logo')) ?>" alt="" height="100px"></center>
-            <h4 class="text-centre"><b>PURCHASE ORDER</b></h4>
+        <center><img src="<?php echo validate_image($_settings->info('logo')) ?>" alt="" height="100px"></center>
+        <h4 class="text-centre" style="font-size:15px ; text-align: center ; padding:20px"><b>PURSHASE Requisition</b></h4>
         </div>
         </div>
         <div class="row mb-2" style="margin-top: 4.5rem !important; margin-bottom: 4.5rem !important;">
@@ -159,6 +226,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
                         <label for="notes" class="control-label">Notes</label>
                         <p><?php echo isset($notes) ? $notes : '' ?></p>
                     </div>-->
+                    <div class="col-1"></div>
                     <div class="col-4">
                         <label for="status" class="control-label">Sales</label>
                         <br>
@@ -193,7 +261,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
                                     }
 								?>
                     </div>
-                    <div class="col-4">
+                    <div class="col-3">
                         <label for="status" class="control-label">Director</label>
                         <br>
                         <?php 

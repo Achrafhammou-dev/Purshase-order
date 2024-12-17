@@ -212,6 +212,82 @@ if (!empty($po_no)) {
 		}
 		return json_encode($resp);
 	}
+
+
+	function save_pr() {
+		extract($_POST);
+		$data = "";
+		foreach ($_POST as $k => $v) {
+			if (in_array($k, array('discount_amount', 'tax_amount')))
+				$v = str_replace(',', '', $v);
+			if (!in_array($k, array('id', 'pr_no')) && !is_array($_POST[$k])) {
+				$v = addslashes(trim($v));
+				if (!empty($data)) $data .= ",";
+				$data .= " {$k}='{$v}' ";
+			}
+		}
+	
+		// Generate the PR number
+		if (!empty($pr_no)) {
+			$check = $this->conn->query("SELECT * FROM pr_list WHERE pr_no = '{$pr_no}' " . ($id > 0 ? " AND id != '{$id}' " : ""))->num_rows;
+			if ($this->capture_err())
+				return $this->capture_err();
+			if ($check > 0) {
+				$resp['status'] = 'pr_failed';
+				$resp['msg'] = "Purchase Requisition Number already exists.";
+				return json_encode($resp);
+				exit;
+			}
+		} else {
+			$year = date("Y");
+			$pr_no = "";
+			$last_pr_query = $this->conn->query("SELECT pr_no FROM pr_list WHERE pr_no LIKE '{$year}-%' ORDER BY pr_no DESC LIMIT 1");
+	
+			if ($last_pr_query->num_rows > 0) {
+				$last_pr = $last_pr_query->fetch_assoc()['pr_no'];
+				$last_sequence = (int)substr($last_pr, strpos($last_pr, '-') + 1);
+				$new_sequence = $last_sequence + 1;
+			} else {
+				$new_sequence = 1;
+			}
+	
+			$pr_no = sprintf("%s-%04d", $year, $new_sequence);
+		}
+	
+		$data .= ", pr_no = '{$pr_no}' ";
+	
+		if (empty($id)) {
+			$sql = "INSERT INTO pr_list SET {$data} ";
+		} else {
+			$sql = "UPDATE pr_list SET {$data} WHERE id = '{$id}' ";
+		}
+		$save = $this->conn->query($sql);
+		if ($save) {
+			$resp['status'] = 'success';
+			$pr_id = empty($id) ? $this->conn->insert_id : $id;
+			$resp['id'] = $pr_id;
+			$data = "";
+			foreach ($item_id as $k => $v) {
+				if (!empty($data)) $data .= ",";
+				$data .= "('{$pr_id}','{$v}','{$unit[$k]}','{$Description_Item[$k]}','{$unit_price[$k]}','{$qty[$k]}')";
+			}
+			if (!empty($data)) {
+				$this->conn->query("DELETE FROM req_items WHERE pr_id = '{$pr_id}'");
+				$save = $this->conn->query("INSERT INTO req_items (pr_id, item_id, unit, Description_Item, unit_price, quantity) VALUES {$data} ");
+			}
+			if (empty($id))
+				$this->settings->set_flashdata('success', "Purchase Requisition successfully saved.");
+			else
+				$this->settings->set_flashdata('success', "Purchase Requisition successfully updated.");
+		} else {
+			$resp['status'] = 'failed';
+			$resp['err'] = $this->conn->error . "[{$sql}]";
+		}
+		return json_encode($resp);
+	}
+	
+
+
 	function delete_po(){
 		extract($_POST);
 		$del = $this->conn->query("DELETE FROM `po_list` where id = '{$id}'");
@@ -225,6 +301,25 @@ if (!empty($po_no)) {
 		return json_encode($resp);
 
 	}
+
+
+
+	function delete_pr(){
+		extract($_POST);
+		$del = $this->conn->query("DELETE FROM `pr_list` where id = '{$id}'");
+		if($del){
+			$resp['status'] = 'success';
+			$this->settings->set_flashdata('success',"Purchase Requisition successfully deleted.");
+		}else{
+			$resp['status'] = 'failed';
+			$resp['error'] = $this->conn->error;
+		}
+		return json_encode($resp);
+
+	}
+
+
+
 	function get_price(){
 		extract($_POST);
 		 $qry = $this->conn->query("SELECT * FROM price_list where unit_id = '{$unit_id}'");
@@ -373,6 +468,12 @@ switch ($action) {
 	break;
 	case 'delete_po':
 		echo $Master->delete_po();
+	break;
+	case 'save_pr':
+		echo $Master->save_pr();
+	break;
+	case 'delete_pr':
+		echo $Master->delete_pr();
 	break;
 	case 'get_price':
 		echo $Master->get_price();

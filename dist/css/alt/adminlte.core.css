@@ -11421,7 +11421,7 @@ body.sidebar-collapse:not(.sidebar-mini-md):not(.sidebar-mini) .main-header::bef
   .sidebar-collapse .sidebar-mini-md .content-wrapper, .sidebar-collapse
   .sidebar-mini-md .main-footer, .sidebar-collapse
   .sidebar-mini-md .main-header {
-    margin-left: 4.6rem;
+    margin-left: 0rem;
   }
 }
 
@@ -11431,7 +11431,7 @@ body.sidebar-collapse:not(.sidebar-mini-md):not(.sidebar-mini) .main-header::bef
   .sidebar-mini-md .main-footer::before,
   .sidebar-mini-md .main-header,
   .sidebar-mini-md .main-header::before {
-    margin-left: 4.6rem;
+    margin-left: 0rem;
   }
 }
 

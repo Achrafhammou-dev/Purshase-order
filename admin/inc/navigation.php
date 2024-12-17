@@ -55,6 +55,14 @@
                         </p>
                       </a>
                     </li>
+                    <li class="nav-item dropdown">
+                      <a href="<?php echo base_url ?>admin/?page=purshase_requisition" class="nav-link nav-purchase_requisations">
+                        <i class="nav-icon fas fa-file-invoice"></i>
+                        <p>
+                        Purshase Requisition
+                        </p>
+                      </a>
+                    </li>
                     <?php if($_settings->userdata('type') == 1): ?>
                     <li class="nav-header">Maintenance</li>
                     <li class="nav-item dropdown">

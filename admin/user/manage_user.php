@@ -19,7 +19,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 			<form action="" id="manage-user">	
 				<input type="hidden" name="id" value="<?php echo isset($meta['id']) ? $meta['id']: '' ?>">
 				<div class="form-group col-6">
-					<label for="name">First Name</label>
+					<label for="name">Departement</label>
 					<input type="text" name="firstname" id="firstname" class="form-control" value="<?php echo isset($meta['firstname']) ? $meta['firstname']: '' ?>" required>
 				</div>
 				<div class="form-group col-6">
@@ -29,6 +29,10 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 				<div class="form-group col-6">
 					<label for="username">Username</label>
 					<input type="text" name="username" id="username" class="form-control" value="<?php echo isset($meta['username']) ? $meta['username']: '' ?>" required  autocomplete="off">
+				</div>
+				<div class="form-group col-6">
+					<label for="username">Email User</label>
+					<input type="email" name="Email_User" id="Email_User" class="form-control" value="<?php echo isset($meta['Email_User']) ? $meta['Email_User']: '' ?>" >
 				</div>
 				<div class="form-group col-6">
 					<label for="password">Password</label>

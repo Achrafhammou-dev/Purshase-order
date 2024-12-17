@@ -3,6 +3,139 @@
 	alert_toast("<?php echo $_settings->flashdata('success') ?>",'success')
 </script>
 <?php endif;?>
+
+<style>
+	/* Responsive table adjustments for mobile */
+@media (max-width: 768px) {
+    /* Table headers */
+
+	.card-body{
+		flex: 1 1 auto;
+	    min-height: 1px;
+		padding: 0rem;
+	}
+
+    /* Table body rows */
+    /* Table Responsive */
+    #item-list {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    #item-list thead th,
+    #item-list tbody td {
+        text-align: center;
+        padding: 0.5rem;
+    }
+
+
+    /* Add spacing between rows */
+    .table tr {
+        margin-bottom: 15px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    /* Add labels for each column */
+    .table td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        display: block;
+        text-transform: uppercase;
+        color: #555;
+        margin-bottom: 5px;
+    }
+
+    /* Center align actions */
+    .dropdown-menu {
+        width: 100%;
+        text-align: center;
+    }
+
+    /* Reduce padding and font size for table cells */
+    .table td {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    /* Adjust badge layout */
+    .badge {
+        margin: 2px 0;
+    }
+
+    /* Action button full width */
+    .btn-flat {
+        width: 100%;
+        margin: 5px 0;
+    }
+}
+
+/* CSS pour écrans de petite taille (max-width: 768px) */
+@media (max-width: 768px) {
+    .table-responsive {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Réduction de la taille de la police */
+    .table th, 
+    .table td {
+        font-size: 12px;
+        padding: 6px;
+    }
+
+    /* Suppression ou masquage des colonnes non essentielles */
+     .table th:nth-child(2),
+    .table td:nth-child(2)
+     {
+        display: none;
+    } 
+
+    /* Les boutons d'action occupent l'espace complet */
+    .dropdown-menu {
+        width: 100%;
+    }
+
+    .btn {
+        font-size: 12px;
+        padding: 4px 6px;
+    }
+
+    .card-header .btn {
+        font-size: 14px;
+    }
+
+    /* Affichage des badges en mode bloc pour éviter les débordements */
+    .badge {
+        display: block;
+        margin-bottom: 3px;
+    }
+}
+
+/* CSS pour écrans très petits (max-width: 576px) */
+@media (max-width: 576px) {
+    .card-title {
+        font-size: 16px;
+    }
+
+    .table th, 
+    .table td {
+        font-size: 10px;
+        padding: 4px;
+    }
+
+    .table th:nth-child(3),
+    .table td:nth-child(3) {
+        display: none;
+    }
+
+    /* Alignement centré */
+    .table td, .table th {
+        text-align: center;
+    }
+}
+
+</style>
 <div class="card card-outline card-primary">
 	<div class="card-header">
 		<h3 class="card-title">List of Suppliers</h3>
