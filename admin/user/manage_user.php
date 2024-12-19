@@ -23,7 +23,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 					<input type="text" name="firstname" id="firstname" class="form-control" value="<?php echo isset($meta['firstname']) ? $meta['firstname']: '' ?>" required>
 				</div>
 				<div class="form-group col-6">
-					<label for="name">Last Name</label>
+					<label for="name">full Name</label>
 					<input type="text" name="lastname" id="lastname" class="form-control" value="<?php echo isset($meta['lastname']) ? $meta['lastname']: '' ?>" required>
 				</div>
 				<div class="form-group col-6">

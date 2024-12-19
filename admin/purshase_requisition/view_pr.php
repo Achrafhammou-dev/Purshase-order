@@ -163,7 +163,7 @@ if (isset($_GET['id']) && $_GET['id'] > 0) {
                 $sup_qry = $conn->query("SELECT * FROM users WHERE id = '{$requestor_id}'");
                 $requestor = $sup_qry->fetch_array();
                 ?>
-                <p class="m-0"><?php echo $requestor['firstname']?></p>
+                <p class="m-0"><?php echo $requestor['firstname']?> GFFS SAS</p>
                 <p class="m-0"><?php echo $requestor['lastname'] ?></p>
                 <p class="m-0"><?php echo $requestor['Email_User'] ?></p>
             </div>

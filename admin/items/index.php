@@ -181,9 +181,9 @@
 							<td class='truncate-3' title="<?php echo $row['description'] ?>"><?php echo $row['description'] ?></td>
 							<td class="text-center">
 								<?php if($row['status'] == 1): ?>
-									<span class="badge badge-success">Active</span>
+									<span class="badge badge-success"><i class="fa fa-toggle-on" aria-hidden="true"></i></span>
 								<?php else: ?>
-									<span class="badge badge-secondary">Inactive</span>
+									<span class="badge badge-secondary"><i class="fa fa-ban" aria-hidden="true"></i></span>
 								<?php endif; ?>
 							</td>
 							<td align="center">

@@ -156,7 +156,8 @@
 					<col width="20%">
 					<col width="10%">
 					<col width="15%">
-					<col width="10%">
+					<col width="5%">
+					<col width="5%">
 					<col width="10%">
 				</colgroup>
 				<thead>
@@ -167,7 +168,8 @@
 						<th>requestor</th>
 						<th>Items</th>
 						<th>Total Amount</th>
-						<th>Status</th>
+						<th>DG</th>
+						<th>Finance</th>
 						<th>Action</th>
 					</tr>
 				</thead>
@@ -186,43 +188,32 @@
 							<td class=""><?php echo $row['sname'] ?></td>
 							<td class="text-right"><?php echo number_format($row['item_count']) ?></td>
 							<td class="text-right"><?php echo number_format($row['total_amount']) ?></td>
-							<td>
-								<!-- <?php 
-									switch ($row['status_sales']) {
-										case '1':
-											echo '<span class="badge badge-success">Approved</span>';
-											break;
-										case '2':
-											echo '<span class="badge badge-danger">Denied</span>';
-											break;
-										default:
-											echo '<span class="badge badge-secondary">Pending</span>';
-											break;
-									}
-								?> -->
-								<?php 
-									switch ($row['status_finance']) {
-										case '1':
-											echo '<span class="badge badge-success">Approved</span>';
-											break;
-										case '2':
-											echo '<span class="badge badge-danger">Denied</span>';
-											break;
-										default:
-											echo '<span class="badge badge-secondary">Pending</span>';
-											break;
-									}
-								?>
+							<td  align="center">
 								<?php 
 									switch ($row['status']) {
 										case '1':
-											echo '<span class="badge badge-success">Approved</span>';
+											echo '<span class="badge badge-success"><i class="fa fa-check" aria-hidden="true"></i></span>';
 											break;
 										case '2':
-											echo '<span class="badge badge-danger">Denied</span>';
+											echo '<span class="badge badge-danger"><i class="fas fa-ban"></i></span>';
 											break;
 										default:
-											echo '<span class="badge badge-secondary">Pending</span>';
+											echo '<span class="badge badge-secondary"><i class="fas fa-hourglass-half" aria-hidden="true"></i></span>';
+											break;
+									}
+								?>
+							</td>
+							<td  align="center">
+								<?php 
+									switch ($row['status_finance']) {
+										case '1':
+											echo '<span class="badge badge-success"><i class="fa fa-check" aria-hidden="true"></i></span>';
+											break;
+										case '2':
+											echo '<span class="badge badge-danger"><i class="fas fa-ban"></i></span>';
+											break;
+										default:
+											echo '<span class="badge badge-secondary"><i class="fas fa-hourglass-half" aria-hidden="true"></i></span>';
 											break;
 									}
 								?>
